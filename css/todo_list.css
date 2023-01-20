@@ -1,0 +1,47 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Noto Sans TC", sans-serif;
+    background: rgb(238, 174, 202);
+    background: radial-gradient(circle,
+            #eeaeca 0%,
+            #94bbe9 100%);
+}
+
+.wrapper {
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.badge {
+    color: #fff;
+}
+
+.table {
+    background: white;
+    margin-bottom: 0;
+}
+
+
+.card {
+    width: 100px;
+    height: 100px;
+    padding: 8px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: move;
+    font-size: 8px;
+    user-select: none;
+    display: grid;
+    place-items: center;
+}
+
+.card .btn{
+    font-size: 8px!important;
+    padding: 2px!important;
+    margin: 0 4px;
+}
