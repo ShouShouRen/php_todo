@@ -1,9 +1,6 @@
 <?php
-require_once("pdo.php");
-extract($_GET);
-$sql = "SELECT * FROM todo_list WHERE id = {$id}";
-$stmt = $pdo->prepare($sql);
-$result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+require("function.php");
+EditList();
 ?>
 
 <!DOCTYPE html>

@@ -19,3 +19,22 @@ function StoreList()
     $stmt->execute();
     header("Location: todo_list.php");
 }
+function DeleteList()
+{
+    require_once("pdo.php");
+    extract($_GET);
+    $sql = "DELETE FROM todo_list WHERE id = {$id}";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+    header("Location:todo_list.php");
+}
+function EditList()
+{
+    require_once("pdo.php");
+    extract($_GET);
+    global $stmt;
+    global $result;
+    $sql = "SELECT * FROM todo_list WHERE id = {$id}";
+    $stmt = $pdo->prepare($sql);
+    $result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+}
