@@ -15,7 +15,7 @@ EditList();
 </head>
 
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="todo_list.php">TODO</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
@@ -73,8 +73,16 @@ EditList();
                     </select>
                 </div>
                 <div class="py-2">
+                    <label for="usetodo">優先情況:</label>
+                    <select name="usetodo" class="col-md-3 form-control">
+                        <option value="0" <?php echo $row["usetodo"] == 0 ? "selected" : "" ?>>普通件</option>
+                        <option value="1" <?php echo $row["usetodo"] == 1 ? "selected" : "" ?>>速件</option>
+                        <option value="2" <?php echo $row["usetodo"] == 2 ? "selected" : "" ?>>最速件</option>
+                    </select>
+                </div>
+                <div class="py-2">
                     <label for="">工作敘述</label>
-                    <textarea name="content" class="form-control"><?=$row['content']?></textarea>
+                    <textarea name="content" class="form-control"><?= $row['content'] ?></textarea>
                 </div>
                 <input type="hidden" name="id" value="<?php echo $row["id"]; ?>">
             <?php } ?>
