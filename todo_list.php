@@ -1,10 +1,18 @@
 <?php
-require("function.php");
-ShowAll();
+require_once("pdo.php");
+// $sql = "SELECT * FROM todo_list,status WHERE todo_list.status=status.code";
+$sql = "SELECT * FROM todo_list 
+        JOIN status ON todo_list.status = status.code
+        JOIN usetodo ON todo_list.usetodo = usetodo.codes";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute();
+$result = $pdo->query($sql)->fetchAll(PDO::FETCH_ASSOC);
 session_start();
 if (!isset($_SESSION["AUTH"])) {
     header("Location: index.php");
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -172,17 +180,10 @@ if (!isset($_SESSION["AUTH"])) {
                                         if ($row["start"] == $hour) {
                                     ?>
                                             <div class="card position-absolute" style="height: 13vh; z-index: 1000;" draggable="true" data-id="<?= $row['id'] ?>" data-start="<?= $row['start'] ?>">
-                                                <div class="row">
-                                                    <div class="col p-1">
-                                                        <span><?php echo $row["title"] ?></span>
-                                                        <div class='job-duration'><?php echo $row['start'] . "-" . $row['end'] ?></div>
-
-                                                    </div>
-                                                    <div class="col p-1">
-                                                        <div><?=$row['code_name']?></div>
-                                                        <div><?=$row['codes_name']?></div>
-                                                    </div>
-                                                </div>
+                                                <span><?php echo $row["title"] ?></span>
+                                                <div class='job-duration'><?php echo $row['start'] . "-" . $row['end'] ?></div>
+                                                <div><?=$row['code_name']?></div>
+                                                <div><?=$row['codes_name']?></div>
                                                 <div class="d-flex">
                                                     <div><a class="btn btn-danger" href="todo_delete.php?id=<?php echo $row["id"] ?>" onclick="return confirm('確定要刪除?')">刪除</a></div>
                                                     <div><a class="btn btn-secondary" href="todo_edit.php?id=<?php echo $row["id"] ?>">修改</a></div>
