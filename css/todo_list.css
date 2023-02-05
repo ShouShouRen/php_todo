@@ -29,8 +29,7 @@ body {
 
 .card {
     width: 100px;
-    height: 100px;
-    padding: 8px;
+    height: 100%;
     background-color: #007bff;
     color: #fff;
     cursor: move;

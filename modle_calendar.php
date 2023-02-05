@@ -68,6 +68,6 @@ if (!isset($_SESSION["AUTH"])) {
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script src="./asset/bootstrap.js"></script>
-<!-- <script src="./js/todo_list.js"></script> -->
+<script src="./js/todo_list.js"></script>
 
 </html>
