@@ -23,32 +23,72 @@ if (!isset($_SESSION["AUTH"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="asset/bootstrap.css">
     <link rel="stylesheet" href="./css/todo_list.css">
+    <link rel="stylesheet" href="./css/all.min.css">
     <title>Document</title>
+    <style>
+        body {
+            height: 100vh;
+            font-family: "Noto Sans TC", sans-serif;
+            background: linear-gradient(0deg,
+                    slateblue 0%,
+                    royalblue 100%);
+        }
+
+        .t-shadow {
+            box-shadow: 0 0 10px darkslateblue;
+        }
+
+        .time-line:nth-child(odd) {
+            background-color: #eee;
+        }
+
+        .card {
+            width: 100px;
+            height: 100%;
+            /* background-color: #007bff; */
+            backdrop-filter: blur(10px);
+            background: rgba(200, 255, 255, .3);
+            box-shadow: 0px 0px 10px rgba(200, 255, 255, .5);
+            color: #000;
+            cursor: move;
+            font-size: 8px;
+            user-select: none;
+            display: grid;
+            place-items: center;
+        }
+        .border-start{
+            border-left: 10px solid #fff;
+            padding-left: 10px;
+        }
+    </style>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="javascript:;">TODO</a>
+            <a class="navbar-brand" href="javascript:;">TODO工作管理系統 -
+                <?php
+                if ($_SESSION["AUTH"]["role"] == 0) {
+                    echo '管理者專區';
+                } else {
+                    echo '一般會員專區';
+                }
+                ?></a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <?php
+                    if ($_SESSION["AUTH"]["role"] == 0) {
+                        echo '<a class="nav-link" href="member_list.php">管理模組</a>';
+                    }
+                    ?>
+                </li>
+            </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarScroll">
                 <ul class="navbar-nav ml-auto my-2 my-lg-0 navbar-nav-scroll " style="max-height: 100px;">
-                    <li class="nav-item">
-                        <?php
-                        if ($_SESSION["AUTH"]["role"] == 0) {
-                            echo '<a class="nav-link" href="register.php">新增使用者</a>';
-                        }
-                        ?>
-                    </li>
-                    <li class="nav-item">
-                        <?php
-                        if ($_SESSION["AUTH"]["role"] == 0) {
-                            echo '<a class="nav-link" href="member_list.php">會員列表</a>';
-                        }
-                        ?>
-                    </li>
+
                     <li class="nav-item">
                         <div class="nav-link">
                             <?php
@@ -71,21 +111,14 @@ if (!isset($_SESSION["AUTH"])) {
     </nav>
     <div class="container">
         <div class="wrapper">
-        <div class="row align-items-center justify-content-between">
-                <h2><?php
-                    if ($_SESSION["AUTH"]["role"] == 0) {
-                        echo '管理者專區';
-                    } else {
-                        echo '一般會員專區';
-                    }
-                    ?></h2>
-                <h5 class="font-weight-bolder text-center">工作內容</h5>
+            <div class="row align-items-center justify-content-between mb-3">
+                <h5 class="font-weight-bolder text-center text-white border-start">工作計畫</h5>
                 <div>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        建立工作
+                    <button type="button" class="btn btn-sm btn-outline-light" id="switch">
+                        切換檢視
                     </button>
-                    <button type="button" class="btn btn-primary" id="switch">
-                        切換
+                    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#exampleModal">
+                        新增工作
                     </button>
                 </div>
                 <!-- Modal -->
@@ -148,7 +181,9 @@ if (!isset($_SESSION["AUTH"])) {
                                         <label for="">工作敘述</label>
                                         <textarea name="content" class="form-control"></textarea>
                                     </div>
-                                    <input class="btn btn-primary" type="submit" value="建立" id="add-button">
+                                    <div class="text-right">
+                                        <input class="btn btn-primary" type="submit" value="建立" id="add-button">
+                                    </div>
                                 </form>
                             </div>
                         </div>
@@ -156,8 +191,8 @@ if (!isset($_SESSION["AUTH"])) {
                 </div>
             </div>
             <div id="container">
-                <div class="row">
-                    <div class="table-left col-md-2 text-light bg-primary p-0">
+                <div class="row p-4 bg-white rounded-lg t-shadow">
+                    <div class="table-left col-md-2 text-light bg-secondary p-0">
                         <?php
                         for ($i = 0; $i < 24; $i = $i + 2) {
                             $hours = sprintf("%02d - %02d", $i, ($i + 2));
@@ -182,11 +217,11 @@ if (!isset($_SESSION["AUTH"])) {
                                             <div class="card position-absolute" style="height: 13vh; z-index: 1000;" draggable="true" data-id="<?= $row['id'] ?>" data-start="<?= $row['start'] ?>">
                                                 <span><?php echo $row["title"] ?></span>
                                                 <div class='job-duration'><?php echo $row['start'] . "-" . $row['end'] ?></div>
-                                                <div><?=$row['code_name']?></div>
-                                                <div><?=$row['codes_name']?></div>
+                                                <div><?= $row['code_name'] ?></div>
+                                                <div><?= $row['codes_name'] ?></div>
                                                 <div class="d-flex">
+                                                    <div><a class="btn btn-outline-dark" href="todo_edit.php?id=<?php echo $row["id"] ?>">修改</a></div>
                                                     <div><a class="btn btn-danger" href="todo_delete.php?id=<?php echo $row["id"] ?>" onclick="return confirm('確定要刪除?')">刪除</a></div>
-                                                    <div><a class="btn btn-secondary" href="todo_edit.php?id=<?php echo $row["id"] ?>">修改</a></div>
                                                 </div>
                                             </div>
                                     <?php

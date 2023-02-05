@@ -6,15 +6,13 @@
 
 body {
     font-family: "Noto Sans TC", sans-serif;
-    background: rgb(238, 174, 202);
-    background: radial-gradient(circle,
-            #eeaeca 0%,
-            #94bbe9 100%);
+    background: linear-gradient(0deg,
+    slateblue 0%,
+    royalblue 100%);
 }
 
 .wrapper {
     padding-top: 70px;
-    padding-bottom: 70px;
 }
 
 .badge {
@@ -30,7 +28,9 @@ body {
 .card {
     width: 100px;
     height: 100%;
-    background-color: #007bff;
+    /* background-color: #007bff; */
+    backdrop-filter: bluer(10px);
+    background: rgba(0, 0, 0, .5);
     color: #fff;
     cursor: move;
     font-size: 8px;
@@ -43,4 +43,7 @@ body {
     font-size: 8px!important;
     padding: 2px!important;
     margin: 0 4px;
+}
+.time-line:nth-child(odd){
+    background-color: orange;
 }

@@ -7,12 +7,10 @@
 
 body {
   font-family: "Noto Sans TC", sans-serif;
-  background: rgb(238, 174, 202);
-  background: radial-gradient(
-    circle,
-    #eeaeca 0%,
-    #94bbe9 100%
-  );
+  /* background: rgba(0,0,0); */
+  background: radial-gradient(circle,
+  royalblue 0%,
+  slateblue 100%);
 }
 
 .d-center {
@@ -30,7 +28,7 @@ h2 {
 .wrapper {
   max-width: 600px;
   backdrop-filter: blur(10px);
-  background-color: #ffc13b6b;
-  border-radius: 8px;
-  border: 2px solid #eee;
+  background-color: #fff;
+  /* border-radius: 8px; */
+  /* border: 2px solid #eee; */
 }
